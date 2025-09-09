@@ -16,6 +16,8 @@ from client_info import clients as client_info
 from google_sheets_models import *
 import gspread
 
+from phone_code import get_country_from_phone_code
+
 
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -81,7 +83,9 @@ def get_flatter_df(df,k='webinar_name', colname='notes'):
     return ''
 
 cols = ['Start Date', 'datetime', 'payment page id', 'payment page name', 'id', 'status', 'created_at', 
-            'vpa', 'name', 'email_notes', 'phone', 'amount', 'contact', 'email', 'webinar', 'utm_source', 'notes', 'international', 'currency', 'description']
+            'vpa', 'name', 'email_notes', 'phone', 'amount', 'contact', 'email', 'webinar', 'utm_source', 'notes', "country"]
+
+
 
 def convert_to_1990_system(date):
     return (date - datetime(1900, 1, 1)+ timedelta(days=2)).days
@@ -121,7 +125,8 @@ def create_pl_df(payments, payment_page_id, payment_page_name, start_date, end_d
     captured_data_date.loc[:, 'amount'] = captured_data_date['amount'] /100
     captured_data_date.loc[:, 'payment page id'] = payment_page_id
     captured_data_date.loc[:, 'payment page name'] = payment_page_name
-
+    captured_data_date.loc[:, 'country phone code'] = captured_data_date['contact'].apply(lambda x : str(x)[:3] if (isinstance(x, str) or str(x).startswith('+') or len(str(x)) > 10) else '')
+    captured_data_date.loc[:, "country"] = captured_data_date['country phone code'].apply(lambda x : get_country_from_phone_code(x) if x != '' else '')
     
     payment_link_df = captured_data_date[cols]
     payment_link_df.reset_index(inplace=True, drop=True)
@@ -185,7 +190,7 @@ def get_razorpay_data(client, start_date):
     print(end_date)
     if start_date == None:
         since = get_yesterday_str(days=3)
-        since = "2025-01-01 00:00:00"
+        since = "2025-07-01 00:00:00"
         message = f"DB initalized from {since}"
         print(since)
         # try:

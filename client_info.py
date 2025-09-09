@@ -8,6 +8,12 @@ clients = {
 
                 }
         },
+        "astro_arun_pandit2": {
+                "key": "rzp_live_dzyWMmfA2lJyQQ", 'secret': '23T7LYRTTmAXpqXmjzgNA7pj',
+                'payment_links': {
+
+                }
+        },
         
 }
     
