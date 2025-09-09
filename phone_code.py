@@ -421,7 +421,7 @@ def extract_phone_code_simple(phone_number: Optional[str]) -> Optional[str]:
     return result
 
 def validate_and_extract_phone_code(phone_number: Optional[str], 
-                                   return_details: bool = False) -> Optional[str] or Tuple[Optional[str], str]:
+                                   return_details: bool = False) :
     """
     Validate phone number and extract code with optional detailed error reporting.
     
@@ -436,89 +436,3 @@ def validate_and_extract_phone_code(phone_number: Optional[str],
         return extract_phone_code(phone_number)
     else:
         return extract_phone_code_simple(phone_number)
-
-# Test cases and examples
-if __name__ == "__main__":
-    test_cases = [
-        # Valid cases
-        "+918637864927",
-        "918637864927", 
-        "+1-555-123-4567",
-        "447700900123",
-        "+49 30 12345678",
-        "+33123456789",
-        "+861234567890",
-        "12125551234",  # US number
-        
-        # Edge cases
-        "+91 863 786 4927",  # With spaces
-        "+91-863-786-4927",  # With dashes
-        "+91 (863) 786-4927", # With parentheses
-        "0091863786427",     # With leading zeros
-        
-        # Error cases
-        None,
-        "",
-        "   ",
-        "123",           # Too short
-        "abc123def",     # Invalid characters
-        "+",             # Just plus
-        "++91863786427", # Double plus
-        "91" + "1" * 20, # Too long
-        123456789,       # Integer input
-        [],              # List input
-        
-        # Invalid codes
-        "999123456789",  # Non-existent code
-        "123456789"      # No valid code
-    ]
-    
-    print("=== Phone Code Extraction Tests ===\n")
-    
-    for i, test_case in enumerate(test_cases, 1):
-        code, status = extract_phone_code(test_case)
-        print(f"Test {i:2d}: {str(test_case):<20} -> Code: {code:<6} | Status: {status}")
-    
-    print("\n=== Simple Function Tests ===\n")
-    
-    simple_tests = ["+918637864927", None, "447700900123", "invalid"]
-    for test in simple_tests:
-        result = extract_phone_code_simple(test)
-        print(f"Input: {str(test):<15} -> Output: {result}")
-    
-    print("\n=== Usage Examples ===")
-    print("\n# Basic usage:")
-    print("code, status = extract_phone_code('+918637864927')")
-    print(f"Result: {extract_phone_code('+918637864927')}")
-    
-    print("\n# Simple usage:")
-    print("code = extract_phone_code_simple('+918637864927')")
-    print(f"Result: {extract_phone_code_simple('+918637864927')}")
-    
-    print("\n# Error handling:")
-    print("code, status = extract_phone_code(None)")
-    print(f"Result: {extract_phone_code(None)}")
-
-# Example usage and testing
-if __name__ == "__main__":
-    print("=== Phone Code to Country Examples ===")
-    print(f"+1: {get_country_from_phone_code('+1')}")
-    print(f"91: {get_country_from_phone_code('91')}")
-    print(f"44: {get_country_from_phone_code('44')}")
-    print(f"49: {get_country_from_phone_code('49')}")
-    print(f"33: {get_country_from_phone_code('33')}")
-    
-    print("\n=== Country to Phone Code Examples ===")
-    print(f"India: {get_phone_code_from_country('India')}")
-    print(f"United Kingdom: {get_phone_code_from_country('United Kingdom')}")
-    print(f"Germany: {get_phone_code_from_country('Germany')}")
-    print(f"Brazil: {get_phone_code_from_country('Brazil')}")
-    
-    print("\n=== Partial Name Search Examples ===")
-    print(f"Countries with 'United': {search_countries_by_partial_name('United')}")
-    print(f"Countries with 'South': {search_countries_by_partial_name('South')}")
-    
-    print(f"\n=== Total countries in database: {len(PHONE_CODE_TO_COUNTRY)} ===")
-    
-    # Uncomment to display all countries by region
-    # display_countries_by_region()
