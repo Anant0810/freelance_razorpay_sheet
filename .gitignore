@@ -1,0 +1,7 @@
+.vscode
+client_secret.json
+google-ads.yaml
+client_info.py
+config.py
+__pycache__
+logs
