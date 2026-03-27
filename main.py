@@ -105,10 +105,10 @@ def create_pl_df(payments, payment_page_id, payment_page_name, start_date, end_d
     if captured_data.shape[0] == 0: return pd.DataFrame()
     
     captured_data.loc[:, 'datetime'] = captured_data['created_at'].apply(lambda x :get_datetime(x, tz=tz))
-    # captured_data.loc[:, 'Start Date'] = captured_data['datetime'].dt.strftime("%Y-%m-%d")
-    captured_data.loc[:, 'Start Date'] = captured_data['datetime'].dt.date
+    captured_data.loc[:, 'Start Date'] = captured_data['datetime'].dt.strftime("%Y-%m-%d")
+    # captured_data.loc[:, 'Start Date'] = captured_data['datetime'].dt.date
     captured_data_date =  captured_data[(captured_data['datetime'] > start_date) & (captured_data['datetime'] < end_date)].copy()
-    captured_data_date['datetime'] = captured_data_date['datetime']
+    captured_data_date['datetime'] = captured_data_date['datetime'].dt.strftime("%Y-%m-%d %H:%M:%S")
     captured_data_date['notes'] = captured_data_date['notes'].apply(str)
     # captured_data_date = captured_data[(captured_data['created_at'] >= from_) & (captured_data['created_at'] < to)].copy()
     print(captured_data_date.shape)

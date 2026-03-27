@@ -98,7 +98,7 @@ def add_data(worksheet, new_data, columns=None):
         else:    
             new_data = df.values.tolist()
     
-    worksheet.append_rows(new_data)
+    worksheet.append_rows(new_data, value_input_option='USER_ENTERED')
 
 def update_data(worksheet, new_data, subset_cols, columns):
 
