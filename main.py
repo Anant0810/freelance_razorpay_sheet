@@ -77,6 +77,16 @@ def get_flatter_df(df,k='name', colname='notes'):
             elif k == "name":
                 if key == "full_name":
                     return value
+                if key == "customer_name":
+                    return value
+            
+            elif k == "email":
+                if key == "customer_email":
+                    return value
+                
+            elif k == "phone":
+                if key == "customer_phone":
+                    return value
                 
     return ""
 
@@ -148,6 +158,7 @@ def get_payment_link_data(client, start_date, end_date):
                     url=f"https://api.razorpay.com/v1/payments?skip={skip}&count={count}", 
                     auth=auth)            
             if res.json()['items'] == [] : break
+            # print(res.json())
         except KeyError as e:
             # print('error', e)
             # print(res.json())
